@@ -198,6 +198,13 @@ QScrollBar::sub-line:horizontal {
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="addAccountBtn">
+        <property name="text">
+         <string>ADD ACCOUNT</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>

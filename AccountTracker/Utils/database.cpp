@@ -1,4 +1,4 @@
-#include "DataBase.h"
+#include "database.h"
 
 DataBase* DataBase::getInstance()
 {

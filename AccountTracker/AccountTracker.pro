@@ -9,15 +9,20 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    DAO/accountsdaosqlite.cpp \
     Utils/database.cpp \
     Utils/logger.cpp \
+    Entities/account.cpp \
     main.cpp \
     Views/Forms/mainwindow.cpp
 
 HEADERS += \
+    DAO/accountsdaosqlite.h \
     Utils/database.h \
     Utils/logger.h \
-    Views/Forms/mainwindow.h
+    Views/Forms/mainwindow.h \
+    Entities/account.h \
+    DAO/iaccountsdao.h
 
 FORMS += \
     Views/Forms/mainwindow.ui

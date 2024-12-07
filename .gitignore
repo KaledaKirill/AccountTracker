@@ -1,3 +1,4 @@
+
 # C++ objects and libs
 *.slo
 *.lo
@@ -29,6 +30,7 @@ ui_*.h
 *.jsc
 Makefile*
 *build-*
+build/
 *.qm
 *.prl
 

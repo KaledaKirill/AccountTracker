@@ -12,7 +12,7 @@
 class AccountsDAOSQLite : public IAccountsDAO
 {
 public:
-    AccountsDAOSQLite(QSqlDatabase& db);
+    AccountsDAOSQLite();
     Account getAccountByName(const QString& accountName) override;
     Account getAccountById(int id) override;
     QList<QString> getAllAccountNames() override;
@@ -21,7 +21,6 @@ public:
     void deleteAccount(int id) override;
 
 private:
-    QSqlDatabase& _db;
     Logger _log;
 
 };

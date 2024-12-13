@@ -1,17 +1,16 @@
 #include "account.h"
 
+Account::Account()
+    : _accountName("")
+    , _sellerName("")
+    , _purchaseDate(QDate())
+    , _invitesCount(0) {}
 
-Account::Account(int id, const QString& accountName, const QString& sellerName, const QDate& purchaseDate, int invitesCount)
-    : _id(id),
-    _accountName(accountName),
-    _sellerName(sellerName),
-    _purchaseDate(purchaseDate),
-    _invitesCount(invitesCount) {}
-
-int Account::getId() const
-{
-    return _id;
-}
+Account::Account(const QString& accountName, const QString& sellerName, const QDate& purchaseDate, int invitesCount)
+    : _accountName(accountName)
+    , _sellerName(sellerName)
+    , _purchaseDate(purchaseDate)
+    , _invitesCount(invitesCount) {}
 
 QString Account::getAccountName() const
 {

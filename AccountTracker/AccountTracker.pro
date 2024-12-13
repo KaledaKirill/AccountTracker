@@ -13,6 +13,7 @@ SOURCES += \
     Utils/database.cpp \
     Utils/logger.cpp \
     Entities/account.cpp \
+    Views/Forms/addaccountdialog.cpp \
     main.cpp \
     Views/Forms/mainwindow.cpp
 
@@ -20,11 +21,13 @@ HEADERS += \
     DAO/accountsdaosqlite.h \
     Utils/database.h \
     Utils/logger.h \
+    Views/Forms/addaccountdialog.h \
     Views/Forms/mainwindow.h \
     Entities/account.h \
     DAO/iaccountsdao.h
 
 FORMS += \
+    Views/Forms/addaccountdialog.ui \
     Views/Forms/mainwindow.ui
 
 # Default rules for deployment.

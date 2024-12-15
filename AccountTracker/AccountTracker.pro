@@ -13,7 +13,8 @@ SOURCES += \
     Utils/database.cpp \
     Utils/logger.cpp \
     Entities/account.cpp \
-    Views/Forms/addaccountdialog.cpp \
+    Views/Dialogs/addaccountdialog.cpp \
+    Views/Dialogs/loginputdialog.cpp \
     main.cpp \
     Views/Forms/mainwindow.cpp
 
@@ -21,14 +22,16 @@ HEADERS += \
     DAO/accountsdaosqlite.h \
     Utils/database.h \
     Utils/logger.h \
-    Views/Forms/addaccountdialog.h \
+    Views/Dialogs/addaccountdialog.h \
     Views/Forms/mainwindow.h \
     Entities/account.h \
-    DAO/iaccountsdao.h
+    DAO/iaccountsdao.h \
+    Views/Dialogs/loginputdialog.h
 
 FORMS += \
-    Views/Forms/addaccountdialog.ui \
-    Views/Forms/mainwindow.ui
+    Views/Dialogs/addaccountdialog.ui \
+    Views/Forms/mainwindow.ui \
+    Views/Dialogs/loginputdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

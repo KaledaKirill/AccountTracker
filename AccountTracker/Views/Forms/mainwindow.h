@@ -25,6 +25,7 @@ public:
 private slots:
     void onAddAccountBtnClicled();
     void onChooseAccountBtnClicked();
+    void onLoadBtnClicked();
 
 private:
     Account _currentAccount;

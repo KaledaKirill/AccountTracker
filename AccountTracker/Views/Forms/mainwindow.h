@@ -3,6 +3,7 @@
 
 #include "../../DAO/iaccountsdao.h"
 #include "../../Entities/account.h"
+#include "../../Parser/ilogparser.h"
 
 #include <QMainWindow>
 #include <QList>
@@ -30,6 +31,7 @@ private slots:
 private:
     Account _currentAccount;
     QScopedPointer<IAccountsDAO> _accountsDAO;
+    QScopedPointer<ILogParser> _parser;
     QList<QString> _accountsNamesList;
 
     Ui::MainWindow *_ui;

@@ -1,15 +1,17 @@
-#include "mainwindow.h"
 #include "../../Views/Dialogs/addaccountdialog.h"
 #include "../../Views/Dialogs/loginputdialog.h"
-#include "ui_mainwindow.h"
 #include "../../DAO/accountsdaosqlite.h"
 #include "../../Entities/account.h"
+#include "../../Parser/logparser.h"
+#include "ui_mainwindow.h"
+#include "mainwindow.h"
 
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , _accountsDAO(new AccountsDAOSQLite())
+    , _parser(new LogParser)
     , _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
@@ -77,7 +79,13 @@ void MainWindow::onLoadBtnClicked()
     {
         QString filePath = dialog.getFilePath();
         if (!filePath.isEmpty())
-            qDebug() << "file input";
+        {
+            QMap<QString, QList<QDate>> logData = _parser->parseFileLog(filePath);
+
+            for (auto it = logData.begin(); it != logData.end(); ++it) {
+                qDebug() << "Account:" << it.key() << "Invites on dates:" << it.value();
+            }
+        }
         else
             QMessageBox::warning(this, "Error", "No file selected!");
     }

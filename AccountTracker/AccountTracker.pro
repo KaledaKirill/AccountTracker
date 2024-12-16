@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     DAO/accountsdaosqlite.cpp \
+    Parser/logparser.cpp \
     Utils/database.cpp \
     Utils/logger.cpp \
     Entities/account.cpp \
@@ -20,13 +21,15 @@ SOURCES += \
 
 HEADERS += \
     DAO/accountsdaosqlite.h \
+    Parser/logparser.h \
     Utils/database.h \
     Utils/logger.h \
     Views/Dialogs/addaccountdialog.h \
     Views/Forms/mainwindow.h \
     Entities/account.h \
     DAO/iaccountsdao.h \
-    Views/Dialogs/loginputdialog.h
+    Views/Dialogs/loginputdialog.h \
+    Parser/ilogparser.h
 
 FORMS += \
     Views/Dialogs/addaccountdialog.ui \

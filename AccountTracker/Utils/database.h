@@ -10,6 +10,7 @@ class DataBase
 public:
     static DataBase* getInstance();
     void connect();
+    void dropDatabase();
 
 private:
     QSqlDatabase _dataBase;

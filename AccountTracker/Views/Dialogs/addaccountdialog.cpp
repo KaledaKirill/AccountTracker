@@ -26,6 +26,7 @@ void AddAccountDialog::onOkButtonClicked()
     QString name = _ui->nameLineEdit->text();
     QString sellerName = _ui->sellerNameLineEdit->text();
     QString purchaseDateString = _ui->purchaseLineEdit->text();
+    QString description = _ui->textEdit->toPlainText();
 
     if (name.isEmpty() || sellerName.isEmpty() || purchaseDateString.isEmpty())
     {
@@ -40,7 +41,7 @@ void AddAccountDialog::onOkButtonClicked()
         return;
     }
 
-    Account newAccount(name, sellerName, purchaseDate, 0);
+    Account newAccount(name, sellerName, purchaseDate, 0, description);
     _accountsDAO->addAccount(newAccount);
 
     accept();

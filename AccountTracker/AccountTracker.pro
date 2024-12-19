@@ -9,30 +9,35 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Core/LogFilesHandler/logfileshandler.cpp \
     DAO/accountsdaosqlite.cpp \
-    Parser/logparser.cpp \
+    Core/Parser/logparser.cpp \
     Utils/database.cpp \
     Utils/logger.cpp \
-    Entities/account.cpp \
+    Core/Entities/account.cpp \
     Views/Dialogs/addaccountdialog.cpp \
+    Views/Dialogs/editaccountdialog.cpp \
     Views/Dialogs/loginputdialog.cpp \
     main.cpp \
     Views/Forms/mainwindow.cpp
 
 HEADERS += \
+    Core/LogFilesHandler/logfileshandler.h \
     DAO/accountsdaosqlite.h \
-    Parser/logparser.h \
+    Core/Parser/logparser.h \
     Utils/database.h \
     Utils/logger.h \
     Views/Dialogs/addaccountdialog.h \
+    Views/Dialogs/editaccountdialog.h \
     Views/Forms/mainwindow.h \
-    Entities/account.h \
+    Core/Entities/account.h \
     DAO/iaccountsdao.h \
     Views/Dialogs/loginputdialog.h \
-    Parser/ilogparser.h
+    Core/Parser/ilogparser.h
 
 FORMS += \
     Views/Dialogs/addaccountdialog.ui \
+    Views/Dialogs/editaccountdialog.ui \
     Views/Forms/mainwindow.ui \
     Views/Dialogs/loginputdialog.ui
 

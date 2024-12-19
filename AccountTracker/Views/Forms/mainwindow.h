@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include "../../DAO/iaccountsdao.h"
-#include "../../Entities/account.h"
-#include "../../Parser/ilogparser.h"
+#include "../../Core/Entities/account.h"
+#include "../../Core/LogFilesHandler/logfileshandler.h"
 
 #include <QMainWindow>
 #include <QList>
@@ -26,18 +26,22 @@ public:
 private slots:
     void onAddAccountBtnClicled();
     void onChooseAccountBtnClicked();
+    void onDescriptionBtnClicked();
+    void onEditAccountBtnClicked();
+    void onDeleteAccountBtnClicked();
     void onLoadBtnClicked();
 
 private:
     Account _currentAccount;
     QScopedPointer<IAccountsDAO> _accountsDAO;
-    QScopedPointer<ILogParser> _parser;
+    QScopedPointer<LogFilesHandler> _logFilesHandler;
     QList<QString> _accountsNamesList;
 
     Ui::MainWindow *_ui;
 
     void loadAccountsNames();
     void showAccountData(const Account& account);
+    bool deleteAccount(const QString& accountName);
 
 };
 #endif

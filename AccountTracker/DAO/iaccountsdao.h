@@ -14,7 +14,6 @@ public:
     virtual void addAccount(const Account& account) = 0;
     virtual void updateAccount(const Account& oldAccount, const Account& newAccount) = 0;
     virtual void deleteAccountByName(const QString& accountName) = 0;
-    virtual void getAccountInvites(const QString& accountName) = 0;
     virtual QList<QDateTime> getInviteTimes(int accountId) = 0;
 
 };

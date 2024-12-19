@@ -20,11 +20,13 @@ public:
     void addAccount(const Account& account) override;
     void updateAccount(const Account& oldAccount, const Account& newAccount) override;
     void deleteAccountByName(const QString& accountName) override;
-    void getAccountInvites(const QString& accountName) override;
     QList<QDateTime> getInviteTimes(int accountId) override;
 
 private:
     Logger _log;
+
+    void addInvites(int accountId, const QList<QDateTime> &inviteTimes);
+    void clearInvites(int accountId);
 
 };
 

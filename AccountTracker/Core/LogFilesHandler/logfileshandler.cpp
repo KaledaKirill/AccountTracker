@@ -1,5 +1,6 @@
 #include "../Parser/logparser.h"
 #include "../../DAO/accountsdaosqlite.h"
+#include "../Entities/account.h"
 #include "logfileshandler.h"
 
 LogFilesHandler::LogFilesHandler()
@@ -34,11 +35,8 @@ void LogFilesHandler::proccesAccountData(const QString &accountName, const QList
         throw std::runtime_error(("Account " + accountName + " not found in database").toStdString());
     Account newAccount = account;
 
-    for (auto& inviteTime : invitesTime)
-    {
+    for (const auto& inviteTime : invitesTime)
         newAccount.addInviteTime(inviteTime);
-        newAccount.increaseInvites();
-    }
 
     _accountsDAO->updateAccount(account, newAccount);
 }

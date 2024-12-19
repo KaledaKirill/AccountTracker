@@ -135,6 +135,10 @@ void MainWindow::showAccountData(const Account &account)
     _ui->sellerNameLabel->setText("seller name: " + account.getSellerName());
     _ui->purchaseDateLabel->setText("purchase date: " + account.getPurchaseDate().toString());
     _ui->invitesCountLabel->setText("invites count: " + QString::number(account.getInvitesCount()));
+
+    qDebug() << "main window";
+    for (const auto& inviteTime : account.getInvitesTime())
+        qDebug() << inviteTime;
 }
 
 bool MainWindow::deleteAccount(const QString &accountName)
@@ -163,7 +167,16 @@ void MainWindow::onLoadBtnClicked()
     {
         QString filePath = dialog.getFilePath();
         if (!filePath.isEmpty())
-            _logFilesHandler->handleFileLog(filePath);
+        {
+            try
+            {
+                _logFilesHandler->handleFileLog(filePath);
+            }
+            catch(const std::runtime_error& e)
+            {
+                QMessageBox::warning(this, "Error", e.what());
+            }
+        }
         else
             QMessageBox::warning(this, "Error", "No file selected!");
     }
@@ -171,10 +184,17 @@ void MainWindow::onLoadBtnClicked()
     {
         QString textInput = dialog.getInputText();
         if (!textInput.isEmpty())
-            _logFilesHandler->handleTextLog(textInput);
+        {
+            try
+            {
+                _logFilesHandler->handleTextLog(textInput);
+            }
+            catch(const std::runtime_error& e)
+            {
+                QMessageBox::warning(this, "Error", e.what());
+            }
+        }
         else
             QMessageBox::warning(this, "Error", "No text entered!");
     }
 }
-
-

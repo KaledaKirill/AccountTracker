@@ -54,6 +54,15 @@ void Account::increaseInvites()
     _invitesCount++;
 }
 
+void Account::addInviteTime(const QDateTime &inviteTime)
+{
+    if (!_invitesTime.contains(inviteTime))
+    {
+        _invitesTime.append(inviteTime);
+        increaseInvites();
+    }
+}
+
 void Account::updateAccount(const QString &accountName, const QString &sellerName, const QDate &purchaseDate, const QString &description)
 {
     _accountName = accountName;

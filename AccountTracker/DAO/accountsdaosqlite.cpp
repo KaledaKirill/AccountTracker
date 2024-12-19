@@ -8,6 +8,35 @@
 
 AccountsDAOSQLite::AccountsDAOSQLite() {}
 
+void AccountsDAOSQLite::addInvites(int accountId, const QList<QDateTime>& inviteTimes)
+{
+    QSqlQuery inviteQuery;
+    for (const auto& inviteTime : inviteTimes) {
+        inviteQuery.prepare("INSERT INTO Invites (account_id, invite_time) VALUES (:account_id, :invite_time)");
+        inviteQuery.bindValue(":account_id", accountId);
+        inviteQuery.bindValue(":invite_time", inviteTime);
+
+        if (!inviteQuery.exec()) {
+            _log.error(__FILE__, "Error adding invite time: " + inviteQuery.lastError().text());
+        }
+    }
+
+    _log.info(__FILE__, "Added " + QString::number(inviteTimes.size()) + " invites for account ID: " + QString::number(accountId));
+}
+
+void AccountsDAOSQLite::clearInvites(int accountId)
+{
+    QSqlQuery deleteInvitesQuery;
+    deleteInvitesQuery.prepare("DELETE FROM Invites WHERE account_id = :account_id");
+    deleteInvitesQuery.bindValue(":account_id", accountId);
+
+    if (!deleteInvitesQuery.exec()) {
+        _log.error(__FILE__, "Error deleting invites for account ID: " + deleteInvitesQuery.lastError().text());
+    }
+
+    _log.info(__FILE__, "Cleared invites for account ID: " + QString::number(accountId));
+}
+
 QList<QDateTime> AccountsDAOSQLite::getInviteTimes(int accountId)
 {
     QList<QDateTime> inviteTimes;
@@ -90,7 +119,8 @@ void AccountsDAOSQLite::addAccount(const Account& account)
         return;
     }
 
-    _log.info(__FILE__, "Account added: " + account.getAccountName());
+    int accountId = query.lastInsertId().toInt();
+    addInvites(accountId, account.getInvitesTime());
 }
 
 void AccountsDAOSQLite::updateAccount(const Account& oldAccount, const Account& newAccount)
@@ -112,7 +142,18 @@ void AccountsDAOSQLite::updateAccount(const Account& oldAccount, const Account& 
         return;
     }
 
-    _log.info(__FILE__, "Account updated from " + oldAccount.getAccountName() + " to " + newAccount.getAccountName());
+    QSqlQuery getIdQuery;
+    getIdQuery.prepare("SELECT id FROM Accounts WHERE account_name = :old_account_name");
+    getIdQuery.bindValue(":old_account_name", oldAccount.getAccountName());
+
+    if (!getIdQuery.exec() || !getIdQuery.next()) {
+        _log.error(__FILE__, "Error fetching account ID: " + getIdQuery.lastError().text());
+        return;
+    }
+
+    int accountId = getIdQuery.value(0).toInt();
+    clearInvites(accountId);
+    addInvites(accountId, newAccount.getInvitesTime());
 }
 
 void AccountsDAOSQLite::deleteAccountByName(const QString& accountName)
@@ -127,26 +168,4 @@ void AccountsDAOSQLite::deleteAccountByName(const QString& accountName)
     }
 
     _log.info(__FILE__, "Account deleted: " + accountName);
-}
-
-void AccountsDAOSQLite::getAccountInvites(const QString& accountName)
-{
-    QSqlQuery query;
-    query.prepare("SELECT i.invite_time FROM Invites i "
-                  "JOIN Accounts a ON i.account_id = a.id "
-                  "WHERE a.account_name = :account_name");
-
-    query.bindValue(":account_name", accountName);
-
-    if (!query.exec()) {
-        _log.error(__FILE__, "Error fetching invites for account: " + query.lastError().text());
-        return;
-    }
-
-    QList<QDateTime> inviteTimes;
-    while (query.next()) {
-        inviteTimes.append(query.value("invite_time").toDateTime());
-    }
-
-    _log.info(__FILE__, "Fetched invites for account: " + accountName);
 }

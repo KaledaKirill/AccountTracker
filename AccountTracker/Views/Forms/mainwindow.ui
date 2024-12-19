@@ -179,8 +179,17 @@ QGroupBox::title {
                <height>16777215</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">
+border: none; /* Optional: removes the button border */
+background-image: url(:/img/delete.png); 
+background-repeat: no-repeat;
+background-position: center;
+background-color: none;
+</string>
+             </property>
              <property name="text">
-              <string>R</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -192,8 +201,26 @@ QGroupBox::title {
                <height>16777215</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">
+border: none; /* Optional: removes the button border */
+background-image: url(:/img/description.png); 
+background-repeat: no-repeat;
+background-position: center;
+background-color: none;
+</string>
+             </property>
              <property name="text">
-              <string>D</string>
+              <string/>
+             </property>
+             <property name="autoDefault">
+              <bool>true</bool>
+             </property>
+             <property name="default">
+              <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -212,8 +239,17 @@ QGroupBox::title {
                <height>16777215</height>
               </size>
              </property>
+             <property name="styleSheet">
+              <string notr="true">
+border: none; /* Optional: removes the button border */
+background-image: url(:/img/edit.png); 
+background-repeat: no-repeat;
+background-position: center;
+background-color: none;
+</string>
+             </property>
              <property name="text">
-              <string>E</string>
+              <string/>
              </property>
             </widget>
            </item>

@@ -19,9 +19,12 @@ public:
     QString getDescription() const;
 
     void addInvites(int count);
+    void increaseInvites();
     void addInviteTime(const QDateTime& inviteTime);
 
     void updateAccount(const QString& accountName, const QString& sellerName, const QDate& purchaseDate, const QString& description);
+
+    bool isEmpty();
 
 private:
     QString _accountName;

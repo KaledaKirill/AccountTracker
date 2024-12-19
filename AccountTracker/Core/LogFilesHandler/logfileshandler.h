@@ -12,15 +12,16 @@ class LogFilesHandler
 public:
     LogFilesHandler();
 
-    bool handleTextLog(const QString& text);
-    bool handleFileLog(const QString& filePath);
+    void handleTextLog(const QString& text);
+    void handleFileLog(const QString& filePath);
 
 private:
     QScopedPointer<ILogParser> _parser;
     QScopedPointer<IAccountsDAO> _accountsDAO;
     Logger _log;
 
-    bool proccesLogData(const QMap<QString, QList<QDateTime>> logData);
+    void proccesLogData(const QMap<QString, QList<QDateTime>> logData);
+    void proccesAccountData(const QString& accountName, const QList<QDateTime> invitesTime);
 
 };
 

@@ -49,6 +49,11 @@ void Account::addInvites(int count)
     _invitesCount += count;
 }
 
+void Account::increaseInvites()
+{
+    _invitesCount++;
+}
+
 void Account::updateAccount(const QString &accountName, const QString &sellerName, const QDate &purchaseDate, const QString &description)
 {
     _accountName = accountName;
@@ -57,3 +62,7 @@ void Account::updateAccount(const QString &accountName, const QString &sellerNam
     _description = description;
 }
 
+bool Account::isEmpty()
+{
+    return _accountName.isEmpty() && _sellerName.isEmpty() && !_purchaseDate.isValid() && _invitesCount == 0 && _description.isEmpty();
+}

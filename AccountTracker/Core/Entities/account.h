@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDate>
 #include <QList>
+#include <QMap>
 
 class Account
 {
@@ -20,10 +21,13 @@ public:
 
     void addInvites(int count);
     void addInviteTime(const QDateTime& inviteTime);
-
     void updateAccount(const QString& accountName, const QString& sellerName, const QDate& purchaseDate, const QString& description);
 
     bool isEmpty();
+
+    QMap<QDate, int> getDailyInvitesCount();
+    QMap<QDate, int> getDailyInvitesCount(const QDate& startDate, const QDate& endDate);
+    QList<QDateTime> getDayliInviteTimes(const QDate& date);
 
 private:
     QString _accountName;

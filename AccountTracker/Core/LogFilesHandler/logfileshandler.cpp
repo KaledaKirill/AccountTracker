@@ -32,7 +32,7 @@ void LogFilesHandler::proccesAccountData(const QString &accountName, const QList
 {
     Account account = _accountsDAO->getAccountByName(accountName);
     if (account.isEmpty())
-        throw std::runtime_error(("Account " + accountName + " not found in database").toStdString());
+        return;
     Account newAccount = account;
 
     for (const auto& inviteTime : invitesTime)

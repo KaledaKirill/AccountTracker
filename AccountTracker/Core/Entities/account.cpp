@@ -75,3 +75,44 @@ bool Account::isEmpty()
 {
     return _accountName.isEmpty() && _sellerName.isEmpty() && !_purchaseDate.isValid() && _invitesCount == 0 && _description.isEmpty();
 }
+
+QMap<QDate, int> Account::getDailyInvitesCount()
+{
+    QMap<QDate, int> dailyCount;
+
+    for (const QDateTime& inviteTime : _invitesTime)
+    {
+        QDate date = inviteTime.date();
+        dailyCount[date]++;
+    }
+
+    return dailyCount;
+}
+
+QMap<QDate, int> Account::getDailyInvitesCount(const QDate& startDate, const QDate& endDate)
+{
+    QMap<QDate, int> dailyCount;
+
+    for (const QDateTime& inviteTime : _invitesTime)
+    {
+        QDate date = inviteTime.date();
+
+        if (date >= startDate && date <= endDate)
+            dailyCount[date]++;
+    }
+
+    return dailyCount;
+}
+
+QList<QDateTime> Account::getDayliInviteTimes(const QDate& date)
+{
+    QList<QDateTime> dailyTimes;
+
+    for (const QDateTime& inviteTime : _invitesTime)
+    {
+        if (inviteTime.date() == date)
+            dailyTimes.append(inviteTime);
+    }
+
+    return dailyTimes;
+}

@@ -4,6 +4,7 @@
 #include "../../DAO/iaccountsdao.h"
 #include "../../Core/Entities/account.h"
 #include "../../Core/LogFilesHandler/logfileshandler.h"
+#include "qchartview.h"
 
 #include <QMainWindow>
 #include <QList>
@@ -36,6 +37,7 @@ private:
     QScopedPointer<IAccountsDAO> _accountsDAO;
     QScopedPointer<LogFilesHandler> _logFilesHandler;
     QList<QString> _accountsNamesList;
+    QChartView* chartView;
 
     Ui::MainWindow *_ui;
 

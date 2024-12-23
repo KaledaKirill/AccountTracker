@@ -1,4 +1,5 @@
 QT       += core gui widgets sql
+QT += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     Core/LogFilesHandler/logfileshandler.cpp \
+    Core/ChartGenerator/chartgenerator.cpp \
     DAO/accountsdaosqlite.cpp \
     Core/Parser/logparser.cpp \
     Utils/database.cpp \
@@ -23,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     Core/LogFilesHandler/logfileshandler.h \
+    Core/ChartGenerator/chartgenerator.h \
     DAO/accountsdaosqlite.h \
     Core/Parser/logparser.h \
     Utils/database.h \

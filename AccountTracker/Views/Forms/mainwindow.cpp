@@ -3,10 +3,15 @@
 #include "../../Views/Dialogs/loginputdialog.h"
 #include "../../DAO/accountsdaosqlite.h"
 #include "../../Core/Entities/account.h"
+#include "../../Core/ChartGenerator/chartgenerator.h"
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
 #include <QMessageBox>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QValueAxis>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -17,6 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     _ui->setupUi(this);
     loadAccountsNames();
 
+    chartView = new QChartView();
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    _ui->chartLayout->addWidget(chartView);
+
     connect(_ui->addAccountBtn, SIGNAL(clicked(bool)), this, SLOT(onAddAccountBtnClicled()));
     connect(_ui->chooseAccountBtn, SIGNAL(clicked(bool)), this, SLOT(onChooseAccountBtnClicked()));
     connect(_ui->loadBtn, SIGNAL(clicked(bool)), this, SLOT(onLoadBtnClicked()));
@@ -24,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_ui->editBtn, SIGNAL(clicked(bool)), this, SLOT(onEditAccountBtnClicked()));
     connect(_ui->deleteBtn, SIGNAL(clicked(bool)), this, SLOT(onDeleteAccountBtnClicked()));
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -53,6 +64,10 @@ void MainWindow::onChooseAccountBtnClicked()
 
     Account account = _accountsDAO->getAccountByName(accountName);
     showAccountData(account);
+    ChartGenerator generator;
+    QChart* chart = generator.createInvitesChart(account.getDailyInvitesCount());
+    if(chart)
+        chartView->setChart(chart);
     _currentAccount = account;
 }
 
@@ -135,10 +150,6 @@ void MainWindow::showAccountData(const Account &account)
     _ui->sellerNameLabel->setText("seller name: " + account.getSellerName());
     _ui->purchaseDateLabel->setText("purchase date: " + account.getPurchaseDate().toString());
     _ui->invitesCountLabel->setText("invites count: " + QString::number(account.getInvitesCount()));
-
-    qDebug() << "main window";
-    for (const auto& inviteTime : account.getInvitesTime())
-        qDebug() << inviteTime;
 }
 
 bool MainWindow::deleteAccount(const QString &accountName)

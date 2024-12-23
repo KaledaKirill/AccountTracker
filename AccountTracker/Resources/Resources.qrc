@@ -3,5 +3,6 @@
         <file>img/delete.png</file>
         <file>img/description.png</file>
         <file>img/edit.png</file>
+        <file>img/arrow.png</file>
     </qresource>
 </RCC>

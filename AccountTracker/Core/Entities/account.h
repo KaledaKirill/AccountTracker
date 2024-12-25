@@ -25,9 +25,9 @@ public:
 
     bool isEmpty();
 
-    QMap<QDate, int> getDailyInvitesCount();
-    QMap<QDate, int> getDailyInvitesCount(const QDate& startDate, const QDate& endDate);
-    QList<QDateTime> getDayliInviteTimes(const QDate& date);
+    QMap<QDate, int> getDailyInvitesCount() const;
+    QMap<QDate, int> getDailyInvitesCount(const QDate& startDate, const QDate& endDate) const;
+    QList<QDateTime> getDayliInviteTimes(const QDate& date) const;
 
 private:
     QString _accountName;

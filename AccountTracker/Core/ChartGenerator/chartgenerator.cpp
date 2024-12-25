@@ -10,6 +10,14 @@ ChartGenerator::ChartGenerator() {}
 
 QChart* ChartGenerator::createInvitesChart(const QMap<QDate, int>& dailyInvitesCount)
 {
+    // Handle the case where the map is empty
+    if (dailyInvitesCount.isEmpty())
+    {
+        QChart* emptyChart = new QChart();
+        emptyChart->setTitle("No Data Available");
+        return emptyChart;
+    }
+
     QLineSeries* lineSeries = new QLineSeries();
 
     // Ensure all dates between the first and last date are covered, including one day earlier
@@ -17,7 +25,8 @@ QChart* ChartGenerator::createInvitesChart(const QMap<QDate, int>& dailyInvitesC
     QDate lastDate = dailyInvitesCount.lastKey();
 
     // Fill in all dates between first and last date with zero invites if not already present
-    for (QDate date = firstDate; date <= lastDate; date = date.addDays(1)) {
+    for (QDate date = firstDate; date <= lastDate; date = date.addDays(1))
+    {
         int inviteCount = dailyInvitesCount.value(date, 0);
         lineSeries->append(date.toJulianDay(), inviteCount);
     }
@@ -28,9 +37,8 @@ QChart* ChartGenerator::createInvitesChart(const QMap<QDate, int>& dailyInvitesC
     // Configure X-axis as a category axis with dates
     QCategoryAxis* axisX = new QCategoryAxis();
     for (QDate date = firstDate; date <= lastDate; date = date.addDays(1))
-    {
         axisX->append(date.toString("dd.MM"), date.toJulianDay());
-    }
+
     axisX->setTitleText("Date");
     axisX->setLabelsAngle(45); // Rotate labels by 45 degrees
 
@@ -53,6 +61,7 @@ QChart* ChartGenerator::createInvitesChart(const QMap<QDate, int>& dailyInvitesC
     chart->legend()->hide();
     return chart;
 }
+
 
 
 // QChart* ChartGenerator::createInvitesChart(const QMap<QDate, int>& dailyInvitesCount)

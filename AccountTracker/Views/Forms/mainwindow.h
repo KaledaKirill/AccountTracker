@@ -4,6 +4,7 @@
 #include "../../DAO/iaccountsdao.h"
 #include "../../Core/Entities/account.h"
 #include "../../Core/LogFilesHandler/logfileshandler.h"
+#include "../../Core/ChartGenerator/chartgenerator.h"
 #include "qchartview.h"
 
 #include <QMainWindow>
@@ -31,19 +32,25 @@ private slots:
     void onEditAccountBtnClicked();
     void onDeleteAccountBtnClicked();
     void onLoadBtnClicked();
+    void onChooseDataRangeBtnClicked();
 
 private:
     Account _currentAccount;
     QScopedPointer<IAccountsDAO> _accountsDAO;
     QScopedPointer<LogFilesHandler> _logFilesHandler;
     QList<QString> _accountsNamesList;
-    QChartView* chartView;
+    QChartView* _chartView;
+    QScopedPointer<ChartGenerator> _chartGenerator;
+
 
     Ui::MainWindow *_ui;
 
     void loadAccountsNames();
     void showAccountData(const Account& account);
     bool deleteAccount(const QString& accountName);
+    void setupChartView();
+    void showAccountChart(const Account& account);
+    void showAccountChart(const Account& account, const QDate& startDate, const QDate& endDate);
 
 };
 #endif

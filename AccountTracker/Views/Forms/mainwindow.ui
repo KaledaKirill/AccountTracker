@@ -116,7 +116,7 @@ QGroupBox {
 }
 
 QLabel {
-	color: #fff;
+	color: #000;
 	font-size: 16px;
 }
 
@@ -136,7 +136,10 @@ QGroupBox::title {
         <item>
          <widget class="QLabel" name="label_2">
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">QLabel {
+	color: #fff;
+	font-size: 16px;
+}</string>
           </property>
           <property name="text">
            <string>start date:</string>
@@ -144,7 +147,7 @@ QGroupBox::title {
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="startDateLineEdit">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -178,7 +181,10 @@ QGroupBox::title {
         <item>
          <widget class="QLabel" name="label">
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">QLabel {
+	color: #fff;
+	font-size: 16px;
+}</string>
           </property>
           <property name="text">
            <string>end date:</string>
@@ -186,7 +192,7 @@ QGroupBox::title {
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="endDateLineEdit">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -202,7 +208,7 @@ QGroupBox::title {
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="chooseDataRangeBtn">
           <property name="minimumSize">
            <size>
             <width>65</width>

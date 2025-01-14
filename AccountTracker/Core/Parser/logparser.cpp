@@ -8,7 +8,6 @@ QMap<QString, QList<QDateTime>> LogParser::parseFileLog(const QString& filePath)
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qWarning("Unable to open file.");
         _log.warning(__FILE__, "Unable to open file: " + filePath);
         return QMap<QString, QList<QDateTime>>();
     }
@@ -31,7 +30,9 @@ QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& log
 {
     QMap<QString, QList<QDateTime>> logData;
     QStringList lines = logText.split('\n');
-    QRegularExpression regex(R"(\[([^\]]+)\] \[➕Инвайт\] (\w+)\.session -> \w+ \| Пользователь успешно добавлен)");
+
+    // Updated regex to handle both tdata_xxx and other session formats (e.g., +79812166369)
+    QRegularExpression regex(R"(\[([^\]]+)\] \[➕Инвайт\] ([\w+]+)\.session -> \w+ \| Пользователь успешно добавлен)");
 
     for (const QString& line : lines)
     {
@@ -39,11 +40,14 @@ QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& log
 
         if (match.hasMatch())
         {
-            QString accountId = match.captured(2);
-            QString dateStr = match.captured(1);
+            QString accountId = match.captured(2); // Matches session identifier
+            QString dateStr = match.captured(1);   // Matches timestamp
 
+            // Remove "tdata_" prefix if it exists
             if (accountId.startsWith("tdata_"))
+            {
                 accountId = accountId.mid(QString("tdata_").length());
+            }
 
             QDateTime dateTime = QDateTime::fromString(dateStr, "dd.MM.yyyy hh:mm:ss");
 
@@ -55,11 +59,13 @@ QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& log
                     logData[accountId] = {dateTime};
             }
             else
+            {
                 _log.warning(__FILE__, "Invalid date format:" + dateStr);
-
+            }
         }
     }
 
     return logData;
 }
+
 

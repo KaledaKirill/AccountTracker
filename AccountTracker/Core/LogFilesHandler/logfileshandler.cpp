@@ -52,7 +52,7 @@ void LogFilesHandler::handleFolderWithLogs(const QString &folderPath)
 void LogFilesHandler::proccesLogData(const QMap<QString, QList<QDateTime> > logData)
 {
     if(logData.isEmpty())
-        throw std::runtime_error("Log is empty or invalid");
+        return;
 
     for (auto it = logData.begin(); it != logData.end(); ++it)
         proccesAccountData(it.key(), it.value());

@@ -31,7 +31,7 @@ QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& log
 {
     QMap<QString, QList<QDateTime>> logData;
     QStringList lines = logText.split('\n');
-    QRegularExpression regex(R"(\[([^\]]+)\] \[➕Инвайт\] tdata_(\d+)\.session -> \w+ \| Пользователь успешно добавлен)");
+    QRegularExpression regex(R"(\[([^\]]+)\] \[➕Инвайт\] (\w+)\.session -> \w+ \| Пользователь успешно добавлен)");
 
     for (const QString& line : lines)
     {
@@ -41,6 +41,10 @@ QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& log
         {
             QString accountId = match.captured(2);
             QString dateStr = match.captured(1);
+
+            if (accountId.startsWith("tdata_"))
+                accountId = accountId.mid(QString("tdata_").length());
+
             QDateTime dateTime = QDateTime::fromString(dateStr, "dd.MM.yyyy hh:mm:ss");
 
             if (dateTime.isValid())
@@ -52,8 +56,10 @@ QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& log
             }
             else
                 _log.warning(__FILE__, "Invalid date format:" + dateStr);
+
         }
     }
 
     return logData;
 }
+

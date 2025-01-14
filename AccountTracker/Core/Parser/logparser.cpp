@@ -1,7 +1,10 @@
 #include "LogParser.h"
 
+#include <QDir>
+
 QMap<QString, QList<QDateTime>> LogParser::parseFileLog(const QString& filePath)
 {
+    QMap<QString, QList<QDateTime>> logData;
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -14,12 +17,14 @@ QMap<QString, QList<QDateTime>> LogParser::parseFileLog(const QString& filePath)
     QString logText = in.readAll();
     file.close();
 
-    return extractInviteDates(logText);
+    logData = extractInviteDates(logText);
+    return logData;
 }
 
 QMap<QString, QList<QDateTime>> LogParser::parseLogText(const QString& logText)
 {
-    return extractInviteDates(logText);
+    QMap<QString, QList<QDateTime>> logData = extractInviteDates(logText);
+    return logData;
 }
 
 QMap<QString, QList<QDateTime>> LogParser::extractInviteDates(const QString& logText)

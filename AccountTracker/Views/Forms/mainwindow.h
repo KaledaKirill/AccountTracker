@@ -52,5 +52,9 @@ private:
     void showAccountChart(const Account& account);
     void showAccountChart(const Account& account, const QDate& startDate, const QDate& endDate);
 
+    void handleFileInput(const QString &filePath);
+    void handleTextInput(const QString &textInput);
+    void handleFolderInput(const QString &folderPath);
+
 };
 #endif

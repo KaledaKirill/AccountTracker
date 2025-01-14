@@ -3,6 +3,8 @@
 #include "../Entities/account.h"
 #include "logfileshandler.h"
 
+#include <QDir>
+
 LogFilesHandler::LogFilesHandler()
     : _parser(new LogParser)
     , _accountsDAO(new AccountsDAOSQLite) {}
@@ -19,10 +21,38 @@ void LogFilesHandler::handleFileLog(const QString &filePath)
     proccesLogData(logData);
 }
 
+void LogFilesHandler::handleFolderWithLogs(const QString &folderPath)
+{
+    QMap<QString, QList<QDateTime>> logData;
+
+    QDir folder(folderPath);
+    if (!folder.exists())
+    {
+        throw std::runtime_error("Folder does not exist");
+        _log.warning(__FILE__, "Folder does not exist: " + folderPath);
+        return;
+    }
+
+    QStringList txtFiles = folder.entryList({"*.txt"}, QDir::Files);
+    if (txtFiles.isEmpty())
+    {
+        throw std::runtime_error("No .txt files in folder");
+        _log.warning(__FILE__, "No .txt files in folder: " + folderPath);
+        return;
+    }
+
+    for (const QString &fileName : txtFiles)
+    {
+        QString filePath = folder.absoluteFilePath(fileName);
+        logData = _parser->parseFileLog(filePath);
+        proccesLogData(logData);
+    }
+}
+
 void LogFilesHandler::proccesLogData(const QMap<QString, QList<QDateTime> > logData)
 {
     if(logData.isEmpty())
-        throw std::runtime_error("Log is empty");
+        throw std::runtime_error("Log is empty or invalid");
 
     for (auto it = logData.begin(); it != logData.end(); ++it)
         proccesAccountData(it.key(), it.value());

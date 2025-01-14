@@ -14,6 +14,7 @@ public:
 
     void handleTextLog(const QString& text);
     void handleFileLog(const QString& filePath);
+    void handleFolderWithLogs(const QString& folderPath);
 
 private:
     QScopedPointer<ILogParser> _parser;

@@ -194,40 +194,64 @@ void MainWindow::onLoadBtnClicked()
         return;
 
     if (dialog.isFileInput())
-    {
-        QString filePath = dialog.getFilePath();
-        if (!filePath.isEmpty())
-        {
-            try
-            {
-                _logFilesHandler->handleFileLog(filePath);
-            }
-            catch(const std::runtime_error& e)
-            {
-                QMessageBox::warning(this, "Error", e.what());
-            }
-        }
-        else
-            QMessageBox::warning(this, "Error", "No file selected!");
-    }
+        handleFileInput(dialog.getFilePath());
     else if (dialog.isTextInput())
-    {
-        QString textInput = dialog.getInputText();
-        if (!textInput.isEmpty())
-        {
-            try
-            {
-                _logFilesHandler->handleTextLog(textInput);
-            }
-            catch(const std::runtime_error& e)
-            {
-                QMessageBox::warning(this, "Error", e.what());
-            }
-        }
-        else
-            QMessageBox::warning(this, "Error", "No text entered!");
-    }
+        handleTextInput(dialog.getInputText());
+    else if (dialog.isFolderInput())
+        handleFolderInput(dialog.getFolderPath());
 }
+
+void MainWindow::handleFileInput(const QString& filePath)
+{
+    if (!filePath.isEmpty())
+    {
+        try
+        {
+            _logFilesHandler->handleFileLog(filePath);
+        }
+        catch (const std::runtime_error& e)
+        {
+            QMessageBox::warning(this, "Error", e.what());
+        }
+    }
+    else
+        QMessageBox::warning(this, "Error", "No file selected!");
+}
+
+void MainWindow::handleTextInput(const QString& textInput)
+{
+    if (!textInput.isEmpty())
+    {
+        try
+        {
+            _logFilesHandler->handleTextLog(textInput);
+        }
+        catch (const std::runtime_error& e)
+        {
+            QMessageBox::warning(this, "Error", e.what());
+        }
+    }
+    else
+        QMessageBox::warning(this, "Error", "No text entered!");
+}
+
+void MainWindow::handleFolderInput(const QString& folderPath)
+{
+    if (!folderPath.isEmpty())
+    {
+        try
+        {
+            _logFilesHandler->handleFolderWithLogs(folderPath);
+        }
+        catch (const std::runtime_error& e)
+        {
+            QMessageBox::warning(this, "Error", e.what());
+        }
+    }
+    else
+        QMessageBox::warning(this, "Error", "No folder selected!");
+}
+
 
 void MainWindow::onChooseDataRangeBtnClicked()
 {
